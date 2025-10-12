@@ -1,14 +1,46 @@
-import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
-import 'package:cupertino_interactive_keyboard/src/current_route_aware.dart';
-import 'package:cupertino_interactive_keyboard/src/height_observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-var _nextViewId = 0;
+import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
+import 'package:cupertino_interactive_keyboard/src/current_route_aware.dart';
+import 'package:cupertino_interactive_keyboard/src/height_observer.dart';
 
+/// Global counter for generating unique view IDs for input accessories.
+int _nextViewId = 0;
+
+/// A widget that provides input accessory functionality on iOS.
+///
+/// This widget tracks the height of its child and communicates this information
+/// to the native iOS implementation to properly handle keyboard layout when
+/// using input accessory views. On iOS, it provides the necessary integration
+/// for custom input accessory views. On other platforms, it simply returns
+/// the child widget without any modifications.
+///
+/// Input accessory views are typically used to add custom toolbars or
+/// controls above the keyboard.
+///
+/// Example usage:
+/// ```dart
+/// CupertinoInputAccessory(
+///   child: Container(
+///     height: 44,
+///     child: Row(
+///       children: [
+///         TextButton(onPressed: () {}, child: Text('Done')),
+///       ],
+///     ),
+///   ),
+/// )
+/// ```
 class CupertinoInputAccessory extends StatelessWidget {
+  /// Creates a [CupertinoInputAccessory] widget.
+  ///
+  /// The [child] parameter is required and represents the input accessory
+  /// content that will be tracked for height changes on iOS.
   const CupertinoInputAccessory({super.key, required this.child});
 
+  /// The widget below this widget in the tree.
+  /// This typically contains the input accessory UI elements.
   final Widget child;
 
   @override
@@ -21,6 +53,11 @@ class CupertinoInputAccessory extends StatelessWidget {
   }
 }
 
+/// iOS-specific implementation of input accessory functionality.
+///
+/// This widget handles the height tracking and platform communication
+/// for input accessory views on iOS devices. It monitors the height
+/// of its child widget and reports changes to the native implementation.
 class IOSCupertinoInputAccessory extends StatefulWidget {
   const IOSCupertinoInputAccessory({super.key, required this.child});
 
