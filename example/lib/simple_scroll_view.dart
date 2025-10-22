@@ -27,6 +27,7 @@ class SimpleScrollView extends StatefulWidget {
 class _SimpleScrollViewState extends State<SimpleScrollView> {
   final List<TextEditingController> _controllers = [];
   final List<FocusNode> _focusNodes = [];
+   bool _isKeyboardVisible = false;
 
   @override
   void initState() {
@@ -72,6 +73,17 @@ class _SimpleScrollViewState extends State<SimpleScrollView> {
           _buildInstructionBanner(context),
           Expanded(
             child: CupertinoInteractiveKeyboard(
+               onKeyboardVisibilityChanged: (isVisible) {
+                setState(() {
+                  _isKeyboardVisible = isVisible;
+                });
+                
+                // You can notify your system here
+                print('Keyboard visibility changed: $isVisible');
+                
+                // Example: Notify other parts of your app
+                // yourService.notifyKeyboardState(isVisible);
+              },
               child: ListView.separated(
                 padding: const EdgeInsets.all(16.0),
                 itemCount: _buildScrollViewItems().length,
@@ -104,14 +116,36 @@ class _SimpleScrollViewState extends State<SimpleScrollView> {
 
     return Container(
       width: double.infinity,
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: _isKeyboardVisible 
+        ? Theme.of(context).colorScheme.primaryContainer
+        : Theme.of(context).colorScheme.secondaryContainer,
       padding: const EdgeInsets.all(12),
-      child: Text(
-        'Tap a text field, then drag down to dismiss the keyboard interactively',
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
-        textAlign: TextAlign.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            _isKeyboardVisible ? Icons.keyboard : Icons.keyboard_hide,
+            color: _isKeyboardVisible
+              ? Theme.of(context).colorScheme.onPrimaryContainer
+              : Theme.of(context).colorScheme.onSecondaryContainer,
+            size: 20,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              _isKeyboardVisible
+                ? 'Keyboard is VISIBLE - Drag down to dismiss'
+                : 'Keyboard is HIDDEN - Tap a text field to show',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: _isKeyboardVisible
+                  ? Theme.of(context).colorScheme.onPrimaryContainer
+                  : Theme.of(context).colorScheme.onSecondaryContainer,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }

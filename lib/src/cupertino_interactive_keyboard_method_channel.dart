@@ -18,6 +18,31 @@ class MethodChannelCupertinoInteractiveKeyboard
   @visibleForTesting
   final methodChannel = const MethodChannel('cupertino_interactive_keyboard');
 
+  /// Callback for keyboard visibility changes from the platform.
+  PlatformKeyboardVisibilityCallback? _keyboardVisibilityCallback;
+
+  /// Constructor that sets up the method call handler.
+  MethodChannelCupertinoInteractiveKeyboard() {
+    methodChannel.setMethodCallHandler(_handleMethodCall);
+  }
+
+  /// Handles method calls from the native platform.
+  Future<dynamic> _handleMethodCall(MethodCall call) async {
+    switch (call.method) {
+      case 'onKeyboardVisibilityChanged':
+        final bool isVisible = call.arguments as bool;
+        _keyboardVisibilityCallback?.call(isVisible);
+        break;
+      default:
+        debugPrint('[MethodChannel] Unknown method: ${call.method}');
+    }
+  }
+
+  @override
+  void setKeyboardVisibilityCallback(PlatformKeyboardVisibilityCallback? callback) {
+    _keyboardVisibilityCallback = callback;
+  }
+
   @override
   Future<bool?> initialize({required bool firstTime}) {
     try {

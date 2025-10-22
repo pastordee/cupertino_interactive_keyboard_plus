@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+/// Callback type for keyboard visibility changes from the platform.
+typedef PlatformKeyboardVisibilityCallback = void Function(bool isVisible);
+
 /// The platform interface for the cupertino_interactive_keyboard plugin.
 ///
 /// This abstract class defines the interface that platform-specific
@@ -28,6 +31,14 @@ abstract class CupertinoInteractiveKeyboardPlatform extends PlatformInterface {
   static set instance(CupertinoInteractiveKeyboardPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
+  }
+
+  /// Sets the callback for keyboard visibility changes from the platform.
+  ///
+  /// This callback will be invoked by the native platform whenever the
+  /// keyboard visibility changes. Set to null to remove the callback.
+  void setKeyboardVisibilityCallback(PlatformKeyboardVisibilityCallback? callback) {
+    throw UnimplementedError('setKeyboardVisibilityCallback() has not been implemented.');
   }
 
   /// Initializes the platform implementation.

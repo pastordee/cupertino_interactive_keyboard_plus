@@ -32,6 +32,7 @@ public class CupertinoInteractiveKeyboardPlugin: NSObject, FlutterPlugin {
     
     let channel = FlutterMethodChannel(name: "cupertino_interactive_keyboard", binaryMessenger: registrar.messenger())
     let instance = CupertinoInteractiveKeyboardPlugin()
+    instance.methodChannel = channel
     registrar.publish(instance)
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -45,16 +46,55 @@ public class CupertinoInteractiveKeyboardPlugin: NSObject, FlutterPlugin {
   }
   
   /// The custom scroll view that handles interactive keyboard dismissal gestures.
-  private let scrollView = CIKScrollView()
+  let scrollView = CIKScrollView()
   
   /// The input accessory view that manages input accessory heights.
   let inputView = CIKInputAccessoryView()
+  
+  /// The Flutter method channel for communication with Dart.
+  private var methodChannel: FlutterMethodChannel?
   
   /// Logger for this plugin.
   private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "plugin")
     
   override init() {
     super.init()
+    setupKeyboardNotifications()
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  /// Sets up observers for keyboard notifications.
+  private func setupKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
+    
+    os_log("Keyboard notifications set up", log: Self.logger, type: .info)
+  }
+  
+  /// Called when the keyboard will show.
+  @objc private func keyboardWillShow(_ notification: Notification) {
+    os_log("Keyboard will show", log: Self.logger, type: .debug)
+    methodChannel?.invokeMethod("onKeyboardVisibilityChanged", arguments: true)
+  }
+  
+  /// Called when the keyboard will hide.
+  @objc private func keyboardWillHide(_ notification: Notification) {
+    os_log("Keyboard will hide", log: Self.logger, type: .debug)
+    methodChannel?.invokeMethod("onKeyboardVisibilityChanged", arguments: false)
   }
   
   /// Handles method calls from Flutter.

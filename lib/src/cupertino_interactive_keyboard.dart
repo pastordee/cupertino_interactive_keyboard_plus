@@ -13,6 +13,12 @@ bool _firstTime = true;
 /// Global counter for generating unique view IDs.
 int _nextViewId = 0;
 
+/// Callback function type for keyboard visibility changes.
+///
+/// Called whenever the keyboard visibility state changes,
+/// providing a boolean indicating whether the keyboard is visible.
+typedef OnKeyboardVisibilityChanged = void Function(bool isVisible);
+
 /// A widget that enables interactive keyboard dismissal behavior on iOS.
 ///
 /// This widget wraps its child with platform-specific behavior that allows
@@ -23,6 +29,9 @@ int _nextViewId = 0;
 /// Example usage:
 /// ```dart
 /// CupertinoInteractiveKeyboard(
+///   onKeyboardVisibilityChanged: (isVisible) {
+///     print('Keyboard is ${isVisible ? 'visible' : 'hidden'}');
+///   },
 ///   child: ListView(
 ///     children: [
 ///       TextField(),
@@ -36,15 +45,33 @@ class CupertinoInteractiveKeyboard extends StatelessWidget {
   ///
   /// The [child] parameter is required and represents the widget tree
   /// that will be wrapped with interactive keyboard behavior on iOS.
-  const CupertinoInteractiveKeyboard({super.key, required this.child});
+  ///
+  /// The [onKeyboardVisibilityChanged] callback is optional and will be
+  /// called whenever the keyboard visibility changes (shows or hides).
+  const CupertinoInteractiveKeyboard({
+    super.key,
+    required this.child,
+    this.onKeyboardVisibilityChanged,
+  });
 
   /// The widget below this widget in the tree.
   final Widget child;
 
+  /// Optional callback that fires when keyboard visibility changes.
+  ///
+  /// Called with `true` when the keyboard becomes visible and `false`
+  /// when it is dismissed. This allows the app to respond to keyboard
+  /// visibility changes, such as adjusting UI elements or notifying
+  /// other systems.
+  final OnKeyboardVisibilityChanged? onKeyboardVisibilityChanged;
+
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return IOSCupertinoInteractiveKeyboard(child: child);
+      return IOSCupertinoInteractiveKeyboard(
+        onKeyboardVisibilityChanged: onKeyboardVisibilityChanged,
+        child: child,
+      );
     } else {
       return child;
     }
@@ -62,10 +89,20 @@ class IOSCupertinoInteractiveKeyboard extends StatefulWidget {
   ///
   /// The [child] parameter is required and represents the widget tree
   /// that will be tracked for interactive keyboard behavior.
-  const IOSCupertinoInteractiveKeyboard({super.key, required this.child});
+  ///
+  /// The [onKeyboardVisibilityChanged] callback is optional and will be
+  /// called whenever the keyboard visibility changes.
+  const IOSCupertinoInteractiveKeyboard({
+    super.key,
+    required this.child,
+    this.onKeyboardVisibilityChanged,
+  });
 
   /// The widget below this widget in the tree.
   final Widget child;
+
+  /// Optional callback that fires when keyboard visibility changes.
+  final OnKeyboardVisibilityChanged? onKeyboardVisibilityChanged;
 
   @override
   State<StatefulWidget> createState() =>
@@ -73,7 +110,8 @@ class IOSCupertinoInteractiveKeyboard extends StatefulWidget {
 }
 
 class _IOSCupertinoInteractiveKeyboardState
-    extends State<IOSCupertinoInteractiveKeyboard> with CurrentRouteAware {
+    extends State<IOSCupertinoInteractiveKeyboard> 
+    with CurrentRouteAware {
   final _viewId = _nextViewId++;
   Rect? _latestRect;
 
@@ -83,12 +121,23 @@ class _IOSCupertinoInteractiveKeyboardState
     CupertinoInteractiveKeyboardPlatform.instance
         .initialize(firstTime: _firstTime);
     _firstTime = false;
+    
+    // Set up platform callback to receive keyboard visibility changes from iOS
+    if (widget.onKeyboardVisibilityChanged != null) {
+      CupertinoInteractiveKeyboardPlatform.instance.setKeyboardVisibilityCallback(
+        (isVisible) {
+          widget.onKeyboardVisibilityChanged?.call(isVisible);
+        },
+      );
+    }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    // Clear the platform callback
+    CupertinoInteractiveKeyboardPlatform.instance.setKeyboardVisibilityCallback(null);
     CupertinoInteractiveKeyboardPlatform.instance.removeScrollableRect(_viewId);
+    super.dispose();
   }
 
   @override

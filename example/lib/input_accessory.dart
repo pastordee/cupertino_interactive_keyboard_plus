@@ -31,6 +31,7 @@ class _InputAccessoryState extends State<InputAccessory> {
   final FocusNode _inputFocusNode = FocusNode();
   final List<ChatMessage> _messages = [];
   final ScrollController _scrollController = ScrollController();
+   bool _isKeyboardVisible = false;
 
   @override
   void initState() {
@@ -126,6 +127,17 @@ class _InputAccessoryState extends State<InputAccessory> {
             _buildPlatformWarning(),
           Expanded(
             child: CupertinoInteractiveKeyboard(
+              onKeyboardVisibilityChanged: (isVisible) {
+                setState(() {
+                  _isKeyboardVisible = isVisible;
+                });
+                
+                // You can notify your system here
+                print('Keyboard visibility changed: $isVisible');
+                
+                // Example: Notify other parts of your app
+                // yourService.notifyKeyboardState(isVisible);
+              },
               child: ListView.separated(
                 controller: _scrollController,
                 padding: const EdgeInsets.all(16.0),
