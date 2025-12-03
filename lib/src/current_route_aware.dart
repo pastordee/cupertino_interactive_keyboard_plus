@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cupertino_interactive_keyboard_plus/src/persistent_frame_notifier.dart';
+import 'package:cupertino_interactive_keyboard/src/persistent_frame_notifier.dart';
 
 /// A mixin that provides awareness of whether the current route is active.
 ///
