@@ -1,4 +1,4 @@
-import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
+import 'package:cupertino_interactive_keyboard_plus/cupertino_interactive_keyboard_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +7,7 @@ class MethodChannelCupertinoInteractiveKeyboard
     extends CupertinoInteractiveKeyboardPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('cupertino_interactive_keyboard');
+  final methodChannel = const MethodChannel('cupertino_interactive_keyboard_plus');
 
   @override
   Future<bool?> initialize({required bool firstTime}) async {

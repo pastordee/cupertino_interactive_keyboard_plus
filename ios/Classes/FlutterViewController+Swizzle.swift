@@ -21,7 +21,7 @@ func swizzleFlutterViewController() -> Bool {
 /// environments.
 private let swizzleFlutterViewControllerOnce: Bool = {
   let type = FlutterViewController.self
-  let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "swizzling")
+  let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "swizzling")
   
   let results = [
     exchangeSelectors(type, NSSelectorFromString("keyboardWillChangeFrame:"), #selector(FlutterViewController.cik_keyboardWillChangeFrame)),

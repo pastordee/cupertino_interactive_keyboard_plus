@@ -23,7 +23,7 @@ final class CIKScrollView: UIScrollView, UIGestureRecognizerDelegate, KeyboardMa
   var scrollableRects = [Int: CGRect]()
   
   /// Logger for this class.
-  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "scroll_view")
+  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "scroll_view")
   
   /// Initializes the scroll view with common configuration.
   ///

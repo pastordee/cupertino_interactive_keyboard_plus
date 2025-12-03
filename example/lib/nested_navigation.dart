@@ -1,4 +1,4 @@
-import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard.dart';
+import 'package:cupertino_interactive_keyboard_plus/cupertino_interactive_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 

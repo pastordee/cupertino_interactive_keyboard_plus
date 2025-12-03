@@ -30,7 +30,7 @@ public class CupertinoInteractiveKeyboardPlugin: NSObject, FlutterPlugin {
     swizzleFlutterViewController()
     swizzleFlutterTextInputView()
     
-    let channel = FlutterMethodChannel(name: "cupertino_interactive_keyboard", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "cupertino_interactive_keyboard_plus", binaryMessenger: registrar.messenger())
     let instance = CupertinoInteractiveKeyboardPlugin()
     instance.methodChannel = channel
     registrar.publish(instance)
@@ -55,7 +55,7 @@ public class CupertinoInteractiveKeyboardPlugin: NSObject, FlutterPlugin {
   private var methodChannel: FlutterMethodChannel?
   
   /// Logger for this plugin.
-  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "plugin")
+  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "plugin")
     
   override init() {
     super.init()

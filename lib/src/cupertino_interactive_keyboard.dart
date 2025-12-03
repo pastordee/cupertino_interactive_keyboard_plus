@@ -1,7 +1,7 @@
-import 'package:cupertino_interactive_keyboard/src/cupertino_interactive_keyboard_platform_interface.dart';
-import 'package:cupertino_interactive_keyboard/src/current_route_aware.dart';
-import 'package:cupertino_interactive_keyboard/src/interactive_keyboard_scroll_physics.dart';
-import 'package:cupertino_interactive_keyboard/src/rect_observer.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/cupertino_interactive_keyboard_platform_interface.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/current_route_aware.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/interactive_keyboard_scroll_physics.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/rect_observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
