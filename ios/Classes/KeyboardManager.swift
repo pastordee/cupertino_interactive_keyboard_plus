@@ -47,7 +47,7 @@ final class KeyboardManager {
   var activeInputAccessoryViews = NSHashTable<CIKInputAccessoryView>.weakObjects()
   
   /// Logger for this class.
-  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "keyboard_manager")
+  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "keyboard_manager")
   
   /// Private initializer to enforce singleton pattern.
   ///

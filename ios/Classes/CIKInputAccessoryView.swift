@@ -32,7 +32,7 @@ final class CIKInputAccessoryView: UIView, KeyboardManagedObject {
   private lazy var heightConstraint = heightAnchor.constraint(equalToConstant: 0)
   
   /// Logger for this class.
-  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "input_accessory")
+  private static let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "input_accessory")
   
   /// Initializes the input accessory view with common configuration.
   ///

@@ -24,7 +24,7 @@ func swizzleFlutterTextInputView() -> Bool {
 private let swizzleFlutterTextInputViewOnce: Bool = {
   let originalSelector = #selector(getter: UIResponder.inputAccessoryView)
   let replacementSelector = #selector(getter: UIResponder.cik_inputAccessoryView)
-  let logger = OSLog(subsystem: "cupertino_interactive_keyboard", category: "swizzling")
+  let logger = OSLog(subsystem: "cupertino_interactive_keyboard_plus", category: "swizzling")
   
   guard let type = NSClassFromString("FlutterTextInputView") else {
     os_log("Failed to find FlutterTextInputView class", log: logger, type: .error)
