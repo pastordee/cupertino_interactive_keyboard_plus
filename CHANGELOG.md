@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Patch release with improved package naming consistency
+
 ## 0.0.3
 
 * Updated package name to cupertino_interactive_keyboard_plus
