@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
+import 'package:cupertino_interactive_keyboard_plus/cupertino_interactive_keyboard_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// Callback type for keyboard visibility changes from the platform.

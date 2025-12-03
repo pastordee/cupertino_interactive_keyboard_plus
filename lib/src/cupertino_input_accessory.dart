@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cupertino_interactive_keyboard/cupertino_interactive_keyboard_platform_interface.dart';
-import 'package:cupertino_interactive_keyboard/src/current_route_aware.dart';
-import 'package:cupertino_interactive_keyboard/src/height_observer.dart';
+import 'package:cupertino_interactive_keyboard_plus/cupertino_interactive_keyboard_platform_interface.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/current_route_aware.dart';
+import 'package:cupertino_interactive_keyboard_plus/src/height_observer.dart';
 
 /// Global counter for generating unique view IDs for input accessories.
 int _nextViewId = 0;

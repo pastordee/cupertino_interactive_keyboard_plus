@@ -1,3 +1,10 @@
+## 0.0.3
+
+* Updated package name to cupertino_interactive_keyboard_plus
+* Updated method channel names and logging subsystems
+* Fixed all package imports to use new package name
+* Cleaned up old source files
+
 ## 0.0.2+1
 
 * Renamed to cupertino_interactive_keyboard_plus
