@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Fixed podspec file naming to match package name
+
 ## 0.0.4
 
 * Patch release with improved package naming consistency
